@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WaniKaniService;
+namespace WaniKaniService.Models;
 
 public class Preferences
 {

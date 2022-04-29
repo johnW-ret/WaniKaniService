@@ -1,6 +1,6 @@
-namespace WaniKaniService;
-
 using System.Text.Json.Serialization;
+
+namespace WaniKaniService.Models;
 
 public class Response<T>
 {

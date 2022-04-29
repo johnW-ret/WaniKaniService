@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using WaniKaniService.Models;
 
 namespace WaniKaniService;
 
