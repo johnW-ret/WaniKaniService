@@ -7,6 +7,8 @@ namespace WaniKaniService.Tests
     [TestClass]
     public class UserClientTests
     {
+        private readonly string fakeToken = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+
         [TestMethod]
         [DeploymentItem(@"MockResponses/user.json")]
         public void TestMockUser()
@@ -15,7 +17,7 @@ namespace WaniKaniService.Tests
 
             ApiEndpointTestServer.RunListener(new string[] { $"{baseUri}user/" });
 
-            WaniKaniClient waniKaniClient = new WaniKaniClient("faketoken", baseUri);
+            WaniKaniClient waniKaniClient = new WaniKaniClient(fakeToken, baseUri);
 
             Response<User> userResponse = waniKaniClient.UserClient.GetAsync().Result;
 
