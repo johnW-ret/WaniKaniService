@@ -1,9 +1,16 @@
+using System.Text.RegularExpressions;
+
 namespace WaniKaniService;
 
 public class WaniKaniClient
 {
     public WaniKaniClient(string token, string uriBase = DefaultApiUriBase)
     {
+        if (token is null)
+            throw new ArgumentException("API token is null.");
+        else if (!Regex.IsMatch(token, WaniKaniApiKeyPattern))
+            throw new ArgumentException("Invalid API token format.");
+
         Token = token;
 
         client.BaseAddress = new(uriBase);
@@ -15,6 +22,7 @@ public class WaniKaniClient
     }
 
     private const string DefaultApiUriBase = "https://api.wanikani.com/v2/";
+    private const string WaniKaniApiKeyPattern = "^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$";
 
     private readonly HttpClient client = new HttpClient();
 
