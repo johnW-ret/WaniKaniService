@@ -1,4 +1,6 @@
-﻿namespace WaniKaniService;
+﻿using WaniKaniService.Models;
+
+namespace WaniKaniService;
 
 public abstract class ResponseClient<T> : Client, IResponseClient<T>
 {
