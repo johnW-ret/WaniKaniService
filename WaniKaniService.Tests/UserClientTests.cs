@@ -13,20 +13,24 @@ namespace WaniKaniService.Tests
         [DeploymentItem(@"MockResponses/user.json")]
         public void TestMockUser()
         {
+            // setup server
             string baseUri = "http://localhost:7575/";
-
             ApiEndpointTestServer.RunListener(new string[] { $"{baseUri}user/" });
 
+            // create client
             WaniKaniClient waniKaniClient = new WaniKaniClient(fakeToken, baseUri);
 
+            // get response
             Response<User> userResponse = waniKaniClient.UserClient.GetAsync().Result;
 
+            // assert response
             Assert.IsNotNull(userResponse);
 
             Assert.AreEqual(userResponse.Object, "user");
             Assert.AreEqual(userResponse.Url, "https://api.wanikani.com/v2/user");
             Assert.AreEqual(userResponse.DataUpdatedAt, new DateTimeOffset(636586216130222450, new TimeSpan()));
 
+            // assert response data
             Assert.IsNotNull(userResponse.Data);
 
             User user = userResponse.Data;
@@ -38,6 +42,7 @@ namespace WaniKaniService.Tests
             Assert.AreEqual(user.StartedAt, new DateTimeOffset(634722943389584660, new TimeSpan()));
             Assert.IsNull(user.CurrentVacationStartedAt);
 
+            // assert subscription
             Subscription subscription = user.Subscription;
 
             Assert.AreEqual(subscription.Active, true);
@@ -45,6 +50,7 @@ namespace WaniKaniService.Tests
             Assert.AreEqual(subscription.MaxLevelGranted, 60);
             Assert.AreEqual(subscription.PeriodEndsAt, new DateTimeOffset(636801319394857480, new TimeSpan()));
 
+            // assert preferences
             Preferences preferences = user.Preferences;
 
             Assert.AreEqual(preferences.DefaultVoiceActorId, 1);
@@ -53,9 +59,6 @@ namespace WaniKaniService.Tests
             Assert.AreEqual(preferences.LessonsPresentationOrder, "ascending_level_then_subject");
             Assert.AreEqual(preferences.ReviewsAutoplayAudio, false);
             Assert.AreEqual(preferences.ReviewsDisplaySrsIndicator, true);
-
-
-
         }
     }
 }
