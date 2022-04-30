@@ -20,6 +20,7 @@ public class WaniKaniClient
         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
 
         UserClient = new UserClient(client);
+        SubjectsClient = new SubjectsClient(client);
     }
 
     private const string DefaultApiUriBase = "https://api.wanikani.com/v2/";
@@ -28,6 +29,7 @@ public class WaniKaniClient
     private readonly HttpClient client = new HttpClient();
 
     public IResponseClient<User> UserClient { get; }
+    public ICollectionClient<Subject> SubjectsClient { get; }
 
     private string Token { get; init; }
 
