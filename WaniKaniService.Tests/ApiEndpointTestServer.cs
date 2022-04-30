@@ -6,7 +6,7 @@ namespace WaniKaniService.Tests
 {
     public class ApiEndpointTestServer
     {
-        public async static void RunListener(string[] prefixes)
+        public async static void RunListener(string[] prefixes, string path)
         {
             if (!HttpListener.IsSupported)
             {
@@ -34,7 +34,7 @@ namespace WaniKaniService.Tests
             HttpListenerResponse response = context.Response;
 
             // Construct a response.
-            string responseString = new StreamReader(@"user.json").ReadToEnd();
+            string responseString = new StreamReader($"{path}.json").ReadToEnd();
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
 
             // Get a response stream and write the response to it.
