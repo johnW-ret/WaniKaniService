@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="MockResponses\subjects\440.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="MockResponses\user.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
