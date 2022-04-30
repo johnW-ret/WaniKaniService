@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WaniKaniService.Tests
+﻿namespace WaniKaniService.Tests
 {
+    // TODO: revserse expected an actual parameters in some of the method calls 🙂
     public partial class ClientTests
     {
         /// <summary>
