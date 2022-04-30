@@ -14,7 +14,7 @@ public abstract class CollectionClient<T> : Client, ICollectionClient<T>
         CollectionResponse<T>? response;
 
         // get initial request url
-        string? requestUri = $"{ResponseName}{filter}";
+        string? requestUri = $"{ResponseName}?{filter}";
 
         int i = 0;
         do
