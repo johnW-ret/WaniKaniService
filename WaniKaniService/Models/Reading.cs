@@ -7,8 +7,8 @@ public class Reading
     [JsonPropertyName("reading")]
     public string? KanaReading { get; set; }
 
-    [JsonPropertyName("priority")]
-    public bool Priority { get; set; }
+    [JsonPropertyName("primary")]
+    public bool Primary { get; set; }
 
     [JsonPropertyName("accepted_answer")]
     public bool AcceptedAnswer { get; set; }
