@@ -2,13 +2,15 @@ using System.Collections;
 
 namespace WaniKaniService.Models;
 
-public class PagesCollection<T> : IEnumerable<Resource<T>>, IEnumerable, ICollection<CollectionResponse<T>>
+public class PagesCollection<T> : IEnumerable<Resource<T>>, IEnumerable, ICollection<CollectionResponse<T>>, IList<CollectionResponse<T>>
 {
     private List<CollectionResponse<T>> collectionResponses = new List<CollectionResponse<T>>();
 
     public int Count => ((ICollection<CollectionResponse<T>>)collectionResponses).Count;
 
     public bool IsReadOnly => ((ICollection<CollectionResponse<T>>)collectionResponses).IsReadOnly;
+
+    public CollectionResponse<T> this[int index] { get => ((IList<CollectionResponse<T>>)collectionResponses)[index]; set => ((IList<CollectionResponse<T>>)collectionResponses)[index] = value; }
 
     IEnumerator<Resource<T>> IEnumerable<Resource<T>>.GetEnumerator()
     {
@@ -53,6 +55,21 @@ public class PagesCollection<T> : IEnumerable<Resource<T>>, IEnumerable, ICollec
     IEnumerator<CollectionResponse<T>> IEnumerable<CollectionResponse<T>>.GetEnumerator()
     {
         return ((IEnumerable<CollectionResponse<T>>)collectionResponses).GetEnumerator();
+    }
+
+    public int IndexOf(CollectionResponse<T> item)
+    {
+        return ((IList<CollectionResponse<T>>)collectionResponses).IndexOf(item);
+    }
+
+    public void Insert(int index, CollectionResponse<T> item)
+    {
+        ((IList<CollectionResponse<T>>)collectionResponses).Insert(index, item);
+    }
+
+    public void RemoveAt(int index)
+    {
+        ((IList<CollectionResponse<T>>)collectionResponses).RemoveAt(index);
     }
 }
 
