@@ -2,6 +2,7 @@
 using System.Text;
 using System.Reflection;
 using WaniKaniService;
+using WaniKaniService.Models;
 
 WaniKaniClient client;
 string type;
@@ -34,6 +35,37 @@ switch (type)
         {
             int id = Convert.ToInt32(args[2]);
             response = client.SubjectsClient.GetAsync(id).Result;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        break;
+
+    case "subjects":
+        try
+        {
+            // get subjects
+            IEnumerable<Resource<Subject>> subjects = client.SubjectsClient.GetAllAsync(args[2]).Result;
+
+            // show all subjects returned
+            foreach (Resource<Subject> item in subjects)
+            {
+                Console.WriteLine(
+                    string.Format("{0,8} {1,5} {2,5}", item.Data?.Type, item.Id, item.Data?.Characters));
+            }
+
+            // prompt user for specific response
+            int id = -1;
+            while (!subjects.Select(s => s.Id).Contains(id))
+            {
+                Console.WriteLine("Enter the id for the subject you want to view.");
+                id = Convert.ToInt32(Console.ReadLine());
+            }
+
+            // get specific subject
+            response = client.SubjectsClient.GetAsync(id).Result;
+
         }
         catch (Exception)
         {
