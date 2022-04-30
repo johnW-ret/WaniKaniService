@@ -22,6 +22,9 @@
     <None Update="MockResponses\subjects\440.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="MockResponses\subjects\types=kanji.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="MockResponses\user.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
