@@ -2,16 +2,20 @@
 using System.Text;
 using System.Reflection;
 using WaniKaniService;
-using WaniKaniService.Models;
+using WaniKaniService.Examples;
 
 WaniKaniClient client;
-string type;
+string command;
+string? parameter = null;
 
 // get input
 try
 {
     client = new WaniKaniClient(args[0]);
-    type = args[1];
+    command = args[1];
+
+    if (args.Length > 2)
+        parameter = args[2];
 }
 catch (Exception)
 {
@@ -22,63 +26,11 @@ catch (Exception)
 Console.OutputEncoding = Encoding.UTF8;
 
 // string to response
-object response;
-
-switch (type)
-{
-    case "user":
-        response = client.UserClient.GetAsync().Result;
-        break;
-
-    case "subject":
-        try
-        {
-            int id = Convert.ToInt32(args[2]);
-            response = client.SubjectsClient.GetAsync(id).Result;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-        break;
-
-    case "subjects":
-        try
-        {
-            // get subjects
-            IEnumerable<Resource<Subject>> subjects = client.SubjectsClient.GetAllAsync(args[2]).Result;
-
-            // show all subjects returned
-            foreach (Resource<Subject> item in subjects)
-            {
-                Console.WriteLine(
-                    string.Format("{0,8} {1,5} {2,5}", item.Data?.Type, item.Id, item.Data?.Characters));
-            }
-
-            // prompt user for specific response
-            int id = -1;
-            while (!subjects.Select(s => s.Id).Contains(id))
-            {
-                Console.WriteLine("Enter the id for the subject you want to view.");
-                id = Convert.ToInt32(Console.ReadLine());
-            }
-
-            // get specific subject
-            response = client.SubjectsClient.GetAsync(id).Result;
-
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-        break;
-
-    default:
-        throw new Exception("Data type not valid.");
-}
+object response = new ResponseProvider(client)
+    .GetResponse(command, parameter);
 
 // write the response
-Console.WriteLine(response);
+Console.WriteLine();
 Console.WriteLine(PropertiesToString(response));
 
 string PropertiesToString(object obj, string tab = "")
