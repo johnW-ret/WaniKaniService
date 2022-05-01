@@ -6,17 +6,17 @@ namespace WaniKaniService.Tests
 {
     public partial class ClientTests
     {
-        private const string subjectsResponseFolder = "subjects";
-
         [TestClass]
         public class SubjectsClientTests
         {
+            private const string subjectsResponseFolder = "subjects";
+
             [TestMethod]
             [DeploymentItem(@$"{rootResponseFolder}/{subjectsResponseFolder}/440.json")]
             public void TestMockKanji()
             {
                 // setup server
-                ApiEndpointTestServer.RunListener(new string[] { $"{baseUri}subjects/" }, $"{rootResponseFolder}/{subjectsResponseFolder}/440");
+                ApiEndpointTestServer.RunListener(new string[] { $"{baseUri}{subjectsResponseFolder}/" }, $"{rootResponseFolder}/{subjectsResponseFolder}/440");
 
                 // create client
                 WaniKaniClient waniKaniClient = new WaniKaniClient(fakeToken, baseUri);
@@ -93,7 +93,7 @@ namespace WaniKaniService.Tests
             public void TestMockKanjiCollection()
             {
                 // setup server
-                ApiEndpointTestServer.RunListener(new string[] { $"{baseUri}subjects/" }, $"{rootResponseFolder}/{subjectsResponseFolder}/types=kanji");
+                ApiEndpointTestServer.RunListener(new string[] { $"{baseUri}{subjectsResponseFolder}/" }, $"{rootResponseFolder}/{subjectsResponseFolder}/types=kanji");
 
                 // create client
                 WaniKaniClient waniKaniClient = new WaniKaniClient(fakeToken, baseUri);
