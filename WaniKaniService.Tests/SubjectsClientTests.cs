@@ -99,7 +99,7 @@ namespace WaniKaniService.Tests
                 WaniKaniClient waniKaniClient = new WaniKaniClient(fakeToken, baseUri);
 
                 // get pages collection
-                PagesCollection<Subject> kanjiCollectionResponsePages = waniKaniClient.SubjectsClient.GetAllAsync("types=kanji").Result;
+                PagesCollection<Subject> kanjiCollectionResponsePages = waniKaniClient.SubjectsClient.GetAllAsync("types=kanji", 1).Result;
 
                 // assert pages collection
                 Assert.IsNotNull(kanjiCollectionResponsePages);
