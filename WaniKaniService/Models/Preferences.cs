@@ -14,7 +14,7 @@ public class Preferences
     public int LessonsBatchSize { get; set; }
 
     [JsonPropertyName("lessons_presentation_order")]
-    public string? LessonsPresentationOrder { get; set; } = null!;
+    public string LessonsPresentationOrder { get; set; } = null!;
 
     [JsonPropertyName("reviews_autoplay_audio")]
     public bool ReviewsAutoplayAudio { get; set; }
