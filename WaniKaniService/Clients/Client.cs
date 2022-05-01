@@ -1,4 +1,5 @@
 using System.Text.Json;
+using WaniKaniService.Json;
 
 namespace WaniKaniService;
 
@@ -8,7 +9,12 @@ public abstract class Client
     {
         httpClient = client;
         httpClient.DefaultRequestHeaders.Accept.Clear();
+
+        _options = new JsonSerializerOptions();
+        _options.Converters.Add(new ResourceSubjectConverter());
     }
+
+    private JsonSerializerOptions _options;
 
     private HttpClient httpClient { get; init; }
 
@@ -23,7 +29,7 @@ public abstract class Client
 
         try
         {
-            response = await JsonSerializer.DeserializeAsync<R>(await streamTask);
+            response = await JsonSerializer.DeserializeAsync<R>(await streamTask, _options);
         }
         catch (HttpRequestException e)
         {
