@@ -25,7 +25,7 @@ public abstract class CollectionClient<T> : Client, ICollectionClient<T>, IColle
             response = await GetResponse<CollectionResponse<T>>(requestUri);
             responseCollection.Add(response);
         }
-        while ((requestUri = response.Pages.NextUrl?.AbsoluteUri ?? null) != null && i++ < pages);
+        while ((requestUri = response.Pages.NextUrl?.AbsoluteUri ?? null) != null && ++i < pages);
 
         return responseCollection;
     }
