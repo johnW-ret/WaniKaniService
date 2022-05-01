@@ -117,7 +117,7 @@ namespace WaniKaniService.Tests
 
                 Assert.IsNotNull(kanjiCollectionResponse.Pages);
                 Assert.AreEqual(1000, kanjiCollectionResponse.Pages.PerPage);
-                Assert.AreEqual("https://api.wanikani.com/v2/subjects?page_after_id=1439\u0026types=kanji", kanjiCollectionResponse.Pages.NextUrl.ToString());
+                Assert.AreEqual("https://api.wanikani.com/v2/subjects?page_after_id=1439\u0026types=kanji", kanjiCollectionResponse.Pages.NextUrl!.ToString());
                 Assert.IsNull(kanjiCollectionResponse.Pages.PreviousUrl);
                 Assert.AreEqual(2027, kanjiCollectionResponse.TotalCount);
                 Assert.AreEqual(new DateTimeOffset(636588941399469690, new TimeSpan()), kanjiCollectionResponse.DataUpdatedAt);
