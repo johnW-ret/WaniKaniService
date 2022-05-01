@@ -19,6 +19,7 @@ public class WaniKaniClient
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
 
+        AssignmentsClient = new AssignmentsClient(client);
         UserClient = new UserClient(client);
         SubjectsClient = new SubjectsClient(client);
     }
@@ -28,6 +29,7 @@ public class WaniKaniClient
 
     private readonly HttpClient client = new HttpClient();
 
+    public ICollectionClient<Assignment> AssignmentsClient { get; }
     public IResponseClient<User> UserClient { get; }
     public ICollectionClient<Subject> SubjectsClient { get; }
 
