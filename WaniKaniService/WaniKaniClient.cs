@@ -5,23 +5,17 @@ namespace WaniKaniService;
 
 public class WaniKaniClient
 {
-    public WaniKaniClient(string token, string uriBase = DefaultApiUriBase)
+    public WaniKaniClient()
     {
-        if (token is null)
-            throw new ArgumentException("API token is null.");
-        else if (!Regex.IsMatch(token, WaniKaniApiKeyPattern))
-            throw new ArgumentException("Invalid API token format.");
-
-        Token = token;
-
-        client.BaseAddress = new(uriBase);
-
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
-
         AssignmentsClient = new AssignmentsClient(client);
         UserClient = new UserClient(client);
         SubjectsClient = new SubjectsClient(client);
+    }
+
+    public WaniKaniClient(string token, string uriBase = DefaultApiUriBase) : this()
+    {
+        SetClientToken(token);
+        SetClientBaseAddress(new(uriBase));
     }
 
     private const string DefaultApiUriBase = "https://api.wanikani.com/v2/";
@@ -33,9 +27,35 @@ public class WaniKaniClient
     public IResponseClient<User> UserClient { get; }
     public ICollectionClient<Subject> SubjectsClient { get; }
 
-    private string Token { get; init; }
+    private string? _token;
+    /// <summary>
+    /// The API key for the WaniKani user account we are making requests to.
+    /// 
+    /// This token may be <c>null</c> on construction for patterns like dependency injection, however, it may not be set to <c>null</c> at any other point in its lifetime.
+    /// </summary>
+    private string? Token
+    { 
+        get => _token;
+        set
+        {
+            if (value is null)
+                throw new ArgumentNullException(nameof(value), "API token is null.");
+            else if (!Regex.IsMatch(value, WaniKaniApiKeyPattern))
+                throw new ArgumentException(nameof(value), "Invalid API token format.");
 
-    public void UpdateBaseAddress(Uri uri)
+            _token = value;
+        }
+    }
+
+    public void SetClientToken(string token)
+    {
+        Token = token;
+
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+    }
+
+    public void SetClientBaseAddress(Uri uri)
     {
         client.BaseAddress = uri;
     }
