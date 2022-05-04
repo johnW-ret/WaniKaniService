@@ -6,7 +6,7 @@
         /// <summary>
         /// A fake token that matches API key regex
         /// </summary>
-        private static readonly string fakeToken = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+        public static readonly string fakeToken = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
 
         /// <summary>
         /// A URI to run a server for testing

@@ -57,6 +57,8 @@ public class WaniKaniClient
 
     public void SetClientBaseAddress(Uri uri)
     {
+        ArgumentNullException.ThrowIfNull(uri, nameof(uri));
+
         client.BaseAddress = uri;
     }
 }
