@@ -7,6 +7,8 @@ public class WaniKaniClient
 {
     public WaniKaniClient()
     {
+        SetClientBaseAddress(new(DefaultApiUriBase));
+
         AssignmentsClient = new AssignmentsClient(client);
         UserClient = new UserClient(client);
         SubjectsClient = new SubjectsClient(client);
@@ -14,8 +16,8 @@ public class WaniKaniClient
 
     public WaniKaniClient(string token, string uriBase = DefaultApiUriBase) : this()
     {
-        SetClientToken(token);
         SetClientBaseAddress(new(uriBase));
+        SetClientToken(token);
     }
 
     private const string DefaultApiUriBase = "https://api.wanikani.com/v2/";
