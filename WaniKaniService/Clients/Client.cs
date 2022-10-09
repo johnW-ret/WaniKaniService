@@ -20,7 +20,7 @@ public abstract class Client
 
     protected abstract string ResponseName { get; }
 
-    protected async Task<R> GetResponse<R>(string uriExtension)
+    protected async Task<R?> GetResponse<R>(string uriExtension)
         where R : class
     {
         Task<Stream> streamTask = httpClient.GetStreamAsync(uriExtension);
@@ -35,9 +35,6 @@ public abstract class Client
         {
             Console.WriteLine(e.Message);
         }
-
-        if (response == null)
-            throw new NullReferenceException();
 
         return response;
     }

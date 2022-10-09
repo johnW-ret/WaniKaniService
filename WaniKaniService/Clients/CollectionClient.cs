@@ -8,9 +8,9 @@ public abstract class CollectionClient<T> : Client, ICollectionClient<T>, IColle
 
     private const int MaximumPageCount = 100;
 
-    public async Task<PagesCollection<T>> GetAllAsync(string filter, int pages = MaximumPageCount)
+    public async Task<PagesCollection<T>?> GetAllAsync(string filter, int pages = MaximumPageCount)
     {
-        PagesCollection<T> responseCollection = new PagesCollection<T>();
+        PagesCollection<T> responseCollection = new();
         CollectionResponse<T>? response;
 
         // get initial request url
@@ -23,6 +23,10 @@ public abstract class CollectionClient<T> : Client, ICollectionClient<T>, IColle
         do
         {
             response = await GetResponse<CollectionResponse<T>>(requestUri);
+
+            if (response is null)
+                return null;
+
             responseCollection.Add(response);
         }
         while ((requestUri = response.Pages.NextUrl?.AbsoluteUri ?? null) != null && ++i < pages);
@@ -30,27 +34,27 @@ public abstract class CollectionClient<T> : Client, ICollectionClient<T>, IColle
         return responseCollection;
     }
 
-    public async Task<Resource<T>> GetAsync(int id)
+    public async Task<Resource<T>?> GetAsync(int id)
     {
         return await GetResponse<Resource<T>>($"{ResponseName}/{id}");
     }
 
-    async Task<object> ICollectionClient.GetAsync(int id)
+    async Task<object?> ICollectionClient.GetAsync(int id)
     {
         return await GetAsync(id);
     }
 
-    async Task<object> ICollectionClient.GetAllAsync(string filter, int pages)
+    async Task<object?> ICollectionClient.GetAllAsync(string filter, int pages)
     {
         return await GetAllAsync(filter, pages);
     }
 
-    async Task<object> ICollectionClient.GetAllAsync(string filter)
+    async Task<object?> ICollectionClient.GetAllAsync(string filter)
     {
         return await GetAllAsync(filter);
     }
 
-    async Task<PagesCollection<T>> ICollectionClient<T>.GetAllAsync(string filter)
+    async Task<PagesCollection<T>?> ICollectionClient<T>.GetAllAsync(string filter)
     {
         return await GetAllAsync(filter);
     }
